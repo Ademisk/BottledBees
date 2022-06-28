@@ -1,0 +1,22 @@
+{
+	"format_version": "1.16.100",
+	"minecraft:item": {
+		"description": {
+			"identifier": "max:bee_in_a_bottle",
+			"category": "Equipment"
+		},
+		"components": {
+			"minecraft:use_duration": 32,
+			"minecraft:icon": {
+				"texture": "max:bee_in_a_bottle"
+			},
+			"minecraft:projectile": {
+				"minimum_critical_power": 0,
+				"projectile_entity": "max:bee_in_a_bottle"
+			},
+			"minecraft:throwable": {},
+			"minecraft:hand_equipped": true,
+			"minecraft:max_stack_size": 64
+		}
+	  }
+	}

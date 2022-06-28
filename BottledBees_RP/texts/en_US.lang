@@ -1,0 +1,4 @@
+action.interact.bottle=Bottle
+
+item.max:bee_in_a_bottle.name=Bottled Bee
+item.max:bee_in_a_bottle=Bottled Bee

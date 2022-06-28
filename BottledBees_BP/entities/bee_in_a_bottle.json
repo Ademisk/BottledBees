@@ -1,0 +1,79 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "max:bee_in_a_bottle",
+      "is_spawnable": false,
+      "is_summonable": true,
+      "is_experimental": false,
+      "runtime_identifier": "minecraft:snowball"
+    },
+
+    "component_groups": {
+      "max:bee_spawner": {
+        "minecraft:spawn_entity": {
+          "entities": {
+            "min_wait_time": 0,
+            "max_wait_time": 0,
+            "spawn_entity": "bee",
+            "single_use": true,
+            "num_to_spawn": 1,
+            "spawn_event": "minecraft:exited_disturbed_hive"
+          }
+        }
+      },
+      "max:remove_self": {
+        "minecraft:instant_despawn": { }  //removes bottle, so it doesn't keep traveling and triggering 'on_hit' events
+      }
+    },
+
+    "components": {
+      "minecraft:collision_box": {
+        "width": 0.25,
+        "height": 0.25
+      },
+      "minecraft:projectile": {
+        "on_hit": {
+          "impact_damage": {
+            "damage": 0,
+            "knockback": false
+          },
+          "definition_event": {
+            "affect_projectile": true,
+            "event_trigger": {
+              "event": "max:spawn_bee",
+              "target": "self"
+            }
+          },
+          "particle_on_hit": {
+            "particle_type": "snowballpoof",
+            "num_particles": 6,
+            "on_entity_hit": true,
+            "on_other_hit": true
+          }
+        },
+        "hit_sound": "glass",
+        "power": 1.5,
+        "gravity": 0.03,
+        "angle_offset": 0.0
+      },
+      "minecraft:physics": {
+      },
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
+      }
+    },
+
+    "events": {
+      "max:spawn_bee": {
+        "add": {
+          "component_groups": [ 
+            "max:bee_spawner",
+            "max:remove_self"
+          ]
+        }
+      }
+    }
+  }
+}
