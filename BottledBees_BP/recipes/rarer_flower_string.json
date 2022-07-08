@@ -40,12 +40,12 @@
 			},
 			{
 				"item": "minecraft:double_plant",		//rose_bush
-				"data": 2,
+				"data": 4,
 				"count": 1
 			},
 			{
 				"item": "minecraft:double_plant",			//peony
-				"data": 3,
+				"data": 5,
 				"count": 1
 			}
 		],

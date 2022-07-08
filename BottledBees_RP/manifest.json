@@ -1,18 +1,18 @@
 {
 	"format_version": 2,
 	"header": {
-		"name": "Bee in a Bottle - v1.0.2",
+		"name": "Bee in a Bottle - v1.0.4",
 		"description": "Bee in Bottle",
-		"uuid": "fc5cf994-3042-423b-8d56-95d6c40aafab",
-		"version": [1,0,2],
+		"uuid": "8935fa16-da36-4961-b6ff-b50442e5071a",
+		"version": [1,0,4],
 		"min_engine_version": [1,18,10]
 	},
 	"modules": [
 		{
 			"description": "Resources",
-			"uuid": "01f15566-8e22-4296-99c6-ec857da7fdb3",
+			"uuid": "ebf31197-2214-4df4-8e71-cbb6497a3215",
 			"type": "resources",
-			"version": [1,0,2]
+			"version": [1,0,4]
 		}
 	]
 }
