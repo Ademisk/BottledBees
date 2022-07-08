@@ -155,9 +155,34 @@
                     "entity_types": [
                         {
                             "filters": {
-                              "test": "is_family",
-                              "subject": "other",
-                              "value": "player"
+                                "all_of": [
+                                    {"test": "is_family", "subject": "other", "value": "player"},
+                                    {"test": "has_equipment", "domain": "head", "subject": "other", "operator": "not", "value": "max:flower_circlet"}
+                                ]
+                            },
+                            "max_dist": 10
+                        }
+                    ]
+                },
+                "minecraft:timer": {
+                    "looping": true,
+                    "time": 5,
+                    "time_down_event": {
+                        "event": "calmed_down",
+                        "target": "self"
+                    }
+                }
+            },
+            "take_nearest_any_target": {
+                "minecraft:behavior.nearest_attackable_target": {
+                    "priority": 2,
+                    "entity_types": [
+                        {
+                            "filters": {
+                                "all_of": [
+                                    {"test": "is_family", "operator": "!=", "subject": "other", "value": "bee"},
+                                    {"test": "has_equipment", "domain": "head", "subject": "other", "operator": "not", "value": "max:flower_circlet"}
+                                ]
                             },
                             "max_dist": 10
                         }
@@ -603,6 +628,23 @@
                 "add": {
                     "component_groups": [
                         "bee_adult"
+                    ]
+                }
+            },
+            "max:exit_bottle": {
+                "add": {
+                    "component_groups": [
+                        "take_nearest_any_target"
+                    ]
+                },
+                "remove": {
+                    "component_groups": [
+                        "find_hive",
+                        "return_to_home",
+                        "has_nectar",
+                        "abort_shelter_detection",
+                        "shelter_detection",
+                        "escape_fire"
                     ]
                 }
             },

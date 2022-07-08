@@ -1,0 +1,16 @@
+{
+	"format_version": "1.16.100",
+	"minecraft:item": {
+		"description": {
+			"identifier": "max:rarer_flower_string",
+			"category": "Items"
+		},
+		"components": {
+			"minecraft:icon": {
+				"texture": "max:rarer_flower_string"
+			},
+			"minecraft:hand_equipped": true,
+			"minecraft:max_stack_size": 1
+		}
+	  }
+	}

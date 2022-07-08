@@ -1,0 +1,26 @@
+{
+	"format_version": "1.16",
+	
+	"minecraft:recipe_shapeless": {
+		"description": {
+			"identifier": "max:flower_circlet"
+		},
+		"tags": ["crafting_table"],
+
+		"ingredients": [
+			{
+				"item": "max:flower_string",
+				"count": 1
+			},
+			{
+				"item": "max:rarer_flower_string",
+				"count": 1
+			}
+		],
+		
+		"result": {
+			"item": "max:flower_circlet",
+			"count": 1
+		}
+	}
+}

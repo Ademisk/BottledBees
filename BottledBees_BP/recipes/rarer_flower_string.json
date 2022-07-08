@@ -1,0 +1,58 @@
+{
+	"format_version": "1.16",
+	
+	"minecraft:recipe_shapeless": {
+		"description": {
+			"identifier": "max:rarer_flower_string"
+		},
+		"tags": ["crafting_table"],
+
+		"ingredients": [
+			{
+				"item": "minecraft:red_flower",	//pink_tulip
+				"data": 7,
+				"count": 1
+			},
+			{
+				"item": "minecraft:red_flower",	//oxeye_daisy
+				"data": 8,
+				"count": 1
+			},
+			{
+				"item": "minecraft:red_flower",	//cornflower
+				"data": 9,
+				"count": 1
+			},
+			{
+				"item": "minecraft:red_flower",	//lily_of_the_valley
+				"data": 10,
+				"count": 1
+			},
+			{
+				"item": "minecraft:double_plant",		//sunflower
+				"data": 0,
+				"count": 1
+			},
+			{
+				"item": "minecraft:double_plant",			//lilac
+				"data": 1,
+				"count": 1
+			},
+			{
+				"item": "minecraft:double_plant",		//rose_bush
+				"data": 2,
+				"count": 1
+			},
+			{
+				"item": "minecraft:double_plant",			//peony
+				"data": 3,
+				"count": 1
+			}
+		],
+		
+		"result": {
+			"item": "max:rarer_flower_string",
+			"count": 1
+		}
+	}
+}

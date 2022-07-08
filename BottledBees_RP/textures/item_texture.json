@@ -4,6 +4,15 @@
   "texture_data": {
     "max:bee_in_a_bottle": {
       "textures": "textures/items/potion_bottle_bees"
+    },
+    "max:flower_string": {
+      "textures": "textures/items/flower_string"
+    },
+    "max:rarer_flower_string": {
+      "textures": "textures/items/rarer_flower_string"
+    },
+    "max:flower_circlet": {
+      "textures": "textures/items/flower_circlet"
     }
   }
 }

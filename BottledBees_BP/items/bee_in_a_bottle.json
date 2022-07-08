@@ -3,7 +3,7 @@
 	"minecraft:item": {
 		"description": {
 			"identifier": "max:bee_in_a_bottle",
-			"category": "Equipment"
+			"category": "Items"
 		},
 		"components": {
 			"minecraft:use_duration": 32,

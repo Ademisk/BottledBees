@@ -2,3 +2,12 @@ action.interact.bottle=Bottle
 
 item.max:bee_in_a_bottle.name=Bottled Bee
 item.max:bee_in_a_bottle=Bottled Bee
+
+item.max:flower_string.name=Flower String
+item.max:flower_string=Flower String
+
+item.max:rarer_flower_string.name=Rarer Flower String
+item.max:rarer_flower_string=Rarer Flower String
+
+item.max:flower_circlet.name=Flower Circlet
+item.max:flower_circlet=Flower Circlet

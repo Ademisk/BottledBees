@@ -1,0 +1,58 @@
+{
+	"format_version": "1.16",
+	
+	"minecraft:recipe_shapeless": {
+		"description": {
+			"identifier": "max:flower_string"
+		},
+		"tags": ["crafting_table"],
+
+		"ingredients": [
+			{
+				"item": "minecraft:yellow_flower",	//dandellion
+				"data": 2,
+				"count": 1
+			},
+			{
+				"item": "minecraft:red_flower",	//poppy
+				"data": 0,
+				"count": 1
+			},
+			{
+				"item": "minecraft:red_flower",	//azure_bluet
+				"data": 3,
+				"count": 1
+			},
+			{
+				"item": "minecraft:red_flower",	//red_tulip
+				"data": 4,
+				"count": 1
+			},
+			{
+				"item": "minecraft:red_flower",	//orange_tulip
+				"data": 5,
+				"count": 1
+			},
+			{
+				"item": "minecraft:red_flower",	//white_tulip
+				"data": 6,
+				"count": 1
+			},
+			{
+				"item": "minecraft:red_flower",	//pink_tulip
+				"data": 7,
+				"count": 1
+			},
+			{
+				"item": "minecraft:red_flower",	//oxeye_daisy
+				"data": 8,
+				"count": 1
+			},
+		],
+		
+		"result": {
+			"item": "max:flower_string",
+			"count": 1
+		}
+	}
+}

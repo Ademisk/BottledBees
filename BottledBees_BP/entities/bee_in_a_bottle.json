@@ -18,7 +18,7 @@
             "spawn_entity": "bee",
             "single_use": true,
             "num_to_spawn": 1,
-            "spawn_event": "minecraft:exited_disturbed_hive"
+            "spawn_event": "max:exit_bottle"
           }
         }
       },
