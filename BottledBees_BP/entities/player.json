@@ -5,7 +5,15 @@
       "identifier": "minecraft:player",
       "is_spawnable": false,
       "is_summonable": false,
-      "is_experimental": false
+      "is_experimental": false,
+      "animations": {
+        "on_load": "controller.animation.player.load"
+      },
+      "scripts": {
+        "animate": [
+          "on_load"
+        ]
+      }
     },
 
     "component_groups": {
@@ -43,15 +51,184 @@
         "minecraft:spell_effects": {
           "remove_effects": "bad_omen"
         }
+      },
+
+
+      //========================================
+      // Addon
+      //========================================
+      "max:leashed_bee_sensor_for_enabling_flying": {
+        "minecraft:entity_sensor": {
+          "sensor_range": 10,
+          "relative_range":false,
+          "minimum_count": 2,
+          "maximum_count": 2,
+          "event_filters": {
+            "all_of": [
+              {"test": "is_family", "subject": "other", "value": "bee"},
+              {"test": "is_leashed", "subject": "other", "value": true}
+            ]
+          },
+          "event": "max:become_bee_flight_capable"
+        }
+      },
+      "max:fam_and_var_when_not_bee_flight_capable": {
+        "minecraft:type_family": {
+          "family": [ "player"]
+        },
+        "minecraft:variant": {
+          "value": 0
+        }
+      },
+
+      "max:leashed_bee_sensor_for_disabling_flying": {
+        "minecraft:entity_sensor": {
+          "sensor_range": 10,
+          "relative_range":false,
+          "minimum_count": 0,
+          "maximum_count": 1,
+          "event_filters": {
+            "all_of": [
+              {"test": "is_family", "subject": "other", "value": "bee"},
+              {"test": "is_leashed", "subject": "other", "value": true}
+            ]
+          },
+          "event": "max:become_bee_flight_incapable"
+        }
+      },
+      "max:fam_and_var_when_bee_flight_capable": {
+        "minecraft:type_family": {
+          "family": [ "player", "bee_flying" ]
+        },
+        "minecraft:variant": {
+          "value": 1    //For 'riding' bee_swarm. 0 will probs be for not riding anything
+        }
+      },
+
+      "max:bee_target_for_no_movement": {     //stationary
+        "minecraft:rideable": {
+          "seat_count": 1,
+          "pull_in_entities": true,
+          "family_types": [
+            "bee_flying_target"
+          ],
+          "seats": [
+            {
+              "position": [ 0.0, 4.0, 0.0 ],
+                "min_rider_count": 0,
+                "max_rider_count": 0,
+                "lock_rider_rotation": 0
+            }
+          ]
+        }
+      },
+      "max:bee_target_for_left_movement": {   //left
+        "minecraft:rideable": {
+          "seat_count": 1,
+          "pull_in_entities": true,
+          "family_types": [
+            "bee_flying_target"
+          ],
+          "seats": [
+            {
+              "position": [ 4.0, 4.0, 0.0 ],
+                "min_rider_count": 0,
+                "max_rider_count": 0,
+                "lock_rider_rotation": 0
+            }
+          ]
+        }
+      },
+      "max:bee_target_for_right_movement": {  //right
+        "minecraft:rideable": {
+          "seat_count": 1,
+          "pull_in_entities": true,
+          "family_types": [
+            "bee_flying_target"
+          ],
+          "seats": [
+            {
+              "position": [ -4.0, 4.0, 0.0 ],
+              "min_rider_count": 0,
+              "max_rider_count": 0,
+              "lock_rider_rotation": 0
+            }
+          ]
+        }
+      },
+      "max:bee_target_for_forward_movement": {  //forward
+        "minecraft:rideable": {
+          "seat_count": 1,
+          "pull_in_entities": true,
+          "family_types": [
+            "bee_flying_target"
+          ],
+          "seats": [
+            {
+              "position": [ 0.0, 4.0, 4.0 ],
+              "min_rider_count": 0,
+              "max_rider_count": 0,
+              "lock_rider_rotation": 0
+            }
+          ]
+        }
+      },
+      "max:bee_target_for_back_movement": {   //back
+        "minecraft:rideable": {
+          "seat_count": 1,
+          "pull_in_entities": true,
+          "family_types": [
+            "bee_flying_target"
+          ],
+          "seats": [
+            {
+              "position": [ 0.0, 4.0, -4.0 ],
+              "min_rider_count": 0,
+              "max_rider_count": 0,
+              "lock_rider_rotation": 0
+            }
+          ]
+        }
+      },
+
+      "max:default_family": {
+        "minecraft:type_family": {
+          "family": [ "player"]
+        }
       }
+      //========================================
+      //========================================
     },
 
+
+
     "components": {
+      "minecraft:variant": {
+        "value": 0
+      },
+      "minecraft:interact": {
+          "interactions": [
+              {
+                  "on_interact": {
+                      "filters": {
+                          "all_of": [
+                              { "test": "has_equipment", "subject": "self", "domain": "head", "value": "max:flower_circlet"},
+                              { "test" :  "is_family", "subject" : "other", "value" :  "player"},
+                              { "test": "has_equipment", "subject": "other", "domain": "hand", "value": "shears"}
+                          ]
+                      },
+                      "event": "max:cut_flower_circlet"
+                  },
+                  "play_sounds": "shear",
+                  "swing": true
+              }
+          ]
+      },
       "minecraft:experience_reward": {
         "on_death": "Math.Min(query.player_level * 7, 100)"
       },
       "minecraft:type_family": {
-        "family": [ "player" ]
+        "family": [ "player"]
       },
       "minecraft:is_hidden_when_invisible": {
       },
@@ -128,7 +305,7 @@
       "minecraft:rideable": {
         "seat_count": 2,
         "family_types": [
-          "parrot_tame"
+          "parrot_tame", "bee_flying_target"
         ],
         "pull_in_entities": true,
         "seats": [
@@ -171,6 +348,170 @@
     },
 
     "events": {
+      //===================================
+      // Bee Addon
+      //===================================
+      "max:cut_flower_circlet": {
+        "run_command": {
+          "command": [
+            "replaceitem entity @s slot.armor.head 0 air",
+            "give @s max:flower_string",
+            "give @s max:rarer_flower_string"
+          ],
+          "target": "self"
+        }
+      },
+
+      /*"max:bee_leashed": {
+        "add": {
+          "component_groups": [
+            "max:leashed_bee_sensor_for_enabling_flying",
+            "max:fam_and_var_when_not_bee_flight_capable"
+          ]
+        }
+      },*/
+
+      "max:become_bee_flight_capable":{
+        "remove": {
+          "component_groups": [
+            "max:fam_and_var_when_not_bee_flight_capable",
+            "max:leashed_bee_sensor_for_enabling_flying"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "max:fam_and_var_when_bee_flight_capable",
+            "max:leashed_bee_sensor_for_disabling_flying",
+            "max:bee_target_for_no_movement"
+          ]
+        }
+      },
+
+      "max:become_bee_flight_incapable":{
+        "remove": {
+          "component_groups": [
+            "max:fam_and_var_when_bee_flight_capable",
+            "max:leashed_bee_sensor_for_disabling_flying",
+            "max:bee_target_for_no_movement",
+            "max:bee_target_for_left_movement",
+            "max:bee_target_for_right_movement",
+            "max:bee_target_for_forward_movement",
+            "max:bee_target_for_back_movement"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "max:fam_and_var_when_not_bee_flight_capable",
+            "max:leashed_bee_sensor_for_enabling_flying"
+          ]
+        }
+      },
+
+      "max:bee_flying_stationary": {
+        "remove": {
+          "component_groups": [
+            "max:bee_target_for_left_movement",
+            "max:bee_target_for_right_movement",
+            "max:bee_target_for_forward_movement",
+            "max:bee_target_for_back_movement"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "max:bee_target_for_no_movement"
+          ]
+        }
+      },
+      "max:bee_flying_left": {
+        "remove": {
+          "component_groups": [
+            "max:bee_target_for_no_movement",
+            "max:bee_target_for_right_movement",
+            "max:bee_target_for_forward_movement",
+            "max:bee_target_for_back_movement"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "max:bee_target_for_left_movement"
+          ]
+        }
+      },
+      "max:bee_flying_right": {
+        "remove": {
+          "component_groups": [
+            "max:bee_target_for_no_movement",
+            "max:bee_target_for_left_movement",
+            "max:bee_target_for_forward_movement",
+            "max:bee_target_for_back_movement"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "max:bee_target_for_right_movement"
+          ]
+        }
+      },
+      "max:bee_flying_forward": {
+        "remove": {
+          "component_groups": [
+            "max:bee_target_for_no_movement",
+            "max:bee_target_for_left_movement",
+            "max:bee_target_for_right_movement",
+            "max:bee_target_for_back_movement"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "max:bee_target_for_forward_movement"
+          ]
+        }
+      },
+      "max:bee_flying_back": {
+        "remove": {
+          "component_groups": [
+            "max:bee_target_for_no_movement",
+            "max:bee_target_for_left_movement",
+            "max:bee_target_for_right_movement",
+            "max:bee_target_for_forward_movement"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "max:bee_target_for_back_movement"
+          ]
+        }
+      },
+      /*"max:remove_all_bee_flying_sensors": {
+        "remove": {
+          "component_groups": [
+            "max:leashed_bee_sensor_to_enable_flying",
+            "max:leashed_bee_sensor_to_disable_flying",
+            "max:bee_target_for_no_movement",
+            "max:bee_target_for_left_movement",
+            "max:bee_target_for_right_movement",
+            "max:bee_target_for_forward_movement",
+            "max:bee_target_for_back_movement"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "max:default_family"
+          ]
+        }
+      },*/
+      //===================================
+      //===================================
+
+      "minecraft:entity_spawned": {
+        "add": {
+          "component_groups": [
+            "max:leashed_bee_sensor_for_enabling_flying",
+            "max:fam_and_var_when_not_bee_flight_capable"
+          ]
+        }
+      },
+
       "minecraft:gain_bad_omen": {
         "add": {
           "component_groups": [
@@ -203,7 +544,3 @@
     }
   }
 }
-
-
-
-

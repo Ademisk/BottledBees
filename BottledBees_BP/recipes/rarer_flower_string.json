@@ -9,13 +9,13 @@
 
 		"ingredients": [
 			{
-				"item": "minecraft:red_flower",	//pink_tulip
-				"data": 7,
+				"item": "minecraft:red_flower",	//blue_orchid
+				"data": 1,
 				"count": 1
 			},
 			{
-				"item": "minecraft:red_flower",	//oxeye_daisy
-				"data": 8,
+				"item": "minecraft:red_flower",	//allium
+				"data": 2,
 				"count": 1
 			},
 			{

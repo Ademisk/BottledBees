@@ -1,0 +1,17 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "max:bee_flying_ride",
+      "materials": { "default": "entity_alphatest" },
+      "textures": {
+        "default": "textures/entity/endermite"
+      },
+      "geometry": {
+        //"default": "geometry.pixel"
+        "default": "geometry.endermite"
+      },
+      "render_controllers": [ "controller.render.pixel" ]
+    }
+  }
+}

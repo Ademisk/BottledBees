@@ -1,0 +1,94 @@
+{
+    "format_version": "1.18.20",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "max:bee_flying_ride",
+            "is_spawnable": true,
+            "is_summonable": true,
+            "is_experimental": false,
+            "animations": {
+                "on_load": "controller.animation.bee_flying_ride.load",
+                "adjust_flying_target_position": "controller.animation.bee_flying_ride.flight_target_position"
+            },
+            "scripts": {
+                "animate": [
+                    "on_load",
+                    "adjust_flying_target_position"
+                ]
+            }
+        },
+
+        "component_groups": {
+            "max:delay_before_despawn": {
+                "minecraft:timer": {
+                    "looping": false,
+                    "time": 0.4,
+                    "time_down_event": {
+                        "event": "max:despawn"
+                    }
+                }
+            },
+            "max:remove_self": {
+                "minecraft:instant_despawn": { }
+            }
+        },
+
+        "components": {
+            "minecraft:scale": {
+                "value": 0.1
+            },
+            "minecraft:type_family": {
+                "family": [ "bee_flying_ride", "mob" ]
+            },
+            "minecraft:rideable": {
+                "seat_count": 1,
+                "pull_in_entities": true,
+                "family_types": [
+                    "player"
+                ],
+                "seats": [
+                    {
+                        "position": [ 0.0, 4.0, 0.0 ]
+                    }
+                ]
+            },
+            "minecraft:movement": {
+                "value": 0.1
+            },
+            "minecraft:movement.basic": {},
+            "minecraft:input_ground_controlled": {
+            },
+            "minecraft:can_power_jump": {
+            },
+            "minecraft:horse.jump_strength": {
+              "value": {
+                "range_min": 0.4,
+                "range_max": 1.0
+              }
+            },
+            "minecraft:physics": {
+            },
+            "minecraft:health": {
+                "value": 10,
+                "max": 10
+            }
+        },
+
+        "events": {
+            "max:delay_then_despawn": {
+                "add": {
+                    "component_groups": [ 
+                        "max:delay_before_despawn"
+                    ]
+                }
+            },
+            "max:despawn": {
+                "add": {
+                    "component_groups": [ 
+                        "max:remove_self"
+                    ]
+                }
+            }
+        }
+    }
+}

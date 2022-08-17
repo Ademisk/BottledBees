@@ -1,0 +1,219 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.bee_flying_ride.load": {
+			"initial_state": "loaded",
+			"states": {
+				"loaded": {
+					"transitions": [
+						{
+							"has_rider": "query.has_rider && !query.is_on_ground"
+						}
+					]
+				},
+
+				"has_rider": {
+					"transitions": [
+						{
+							"rider_dismounted_midair": "!query.has_rider"
+						},
+						{
+							"despawn": "query.is_on_ground"
+						}
+					]
+				},
+
+				"rider_dismounted_midair": {
+					"on_entry": [
+						"/say Dismounted mid-air!"
+					],
+					"transitions": [
+						{
+							"despawn": "1"
+						}
+					]
+				},
+
+				"despawn": {
+					"on_entry": [
+						"/say despawn!",
+						"@s max:delay_then_despawn"
+					]
+				}
+			}
+		},
+
+		"controller.animation.bee_flying_ride.flight_target_position": {
+			"initial_state": "no_movement",
+			"states": {
+				"empty": {},
+				/*"default": {
+					"transitions": [
+						{
+							"empty": "v.rot = math.mod(360 + math.mod(math.atan2(q.movement_direction(0), q.movement_direction(2)) + q.head_y_rotation(0), 360), 360); return 0;"
+						},
+						{
+							"no_movement": "q.movement_direction(0) == 0 && q.movement_direction(2) == 0"
+						},
+						{
+							"forward": "(variable.rot >= 293 && variable.rot <= 360) || (variable.rot >= 0 && variable.rot <= 67)"
+						},
+						{
+							"backward": "variable.rot >= 112 && variable.rot <= 248"
+						},
+						{
+							"leftward": "variable.rot >= 23 && variable.rot <= 157"
+						},
+						{
+							"rightward": "variable.rot >= 203 && variable.rot <= 337"
+						}
+					]
+				},*/
+
+				"no_movement": {
+					"on_entry": [
+						"/say NO MOVEMENT",
+						"/event entity @p max:bee_flying_stationary",
+						"/ride @e[family=bee_flying_target] start_riding @p"
+						//"/event entity @e[family=bee_flying_target] max:despawn"
+					],
+					"transitions": [
+						{
+							"empty": "v.rot = math.mod(360 + math.mod(math.atan2(q.movement_direction(0), q.movement_direction(2)) + q.head_y_rotation(0), 360), 360); return 0;"
+						},
+						{
+							"forward": "!(q.movement_direction(0) == 0 && q.movement_direction(2) == 0) && (variable.rot >= 293 && variable.rot <= 360) || (variable.rot >= 0 && variable.rot <= 67)"
+						},
+						{
+							"backward": "!(q.movement_direction(0) == 0 && q.movement_direction(2) == 0) && variable.rot >= 112 && variable.rot <= 248"
+						},
+						{
+							"leftward": "!(q.movement_direction(0) == 0 && q.movement_direction(2) == 0) && variable.rot >= 23 && variable.rot <= 157"
+						},
+						{
+							"rightward": "!(q.movement_direction(0) == 0 && q.movement_direction(2) == 0) && variable.rot >= 203 && variable.rot <= 337"
+						}
+					]/*,
+					"on_exit": [
+						"/ride @p summon_rider max:bee_flying_target"
+					]*/
+				},
+
+				"forward": {
+					"on_entry": [
+						"/say FORWARD",
+						"/event entity @p max:bee_flying_forward",
+						"/ride @e[family=bee_flying_target] start_riding @p"
+						//"/event entity @e[family=bee_flying_target] max:despawn"
+					],
+					"transitions": [
+						{
+							"empty": "v.rot = math.mod(360 + math.mod(math.atan2(q.movement_direction(0), q.movement_direction(2)) + q.head_y_rotation(0), 360), 360); return 0;"
+						},
+						{
+							"no_movement": "q.movement_direction(0) == 0 && q.movement_direction(2) == 0"
+						},
+						{
+							"backward": "variable.rot >= 112 && variable.rot <= 248"
+						},
+						{
+							"leftward": "variable.rot >= 23 && variable.rot <= 157"
+						},
+						{
+							"rightward": "variable.rot >= 203 && variable.rot <= 337"
+						}
+					]/*,
+					"on_exit": [
+						"/ride @p summon_rider max:bee_flying_target"
+					]*/
+				},
+
+				"backward": {
+					"on_entry": [
+						"/say BACKWARD",
+						"/event entity @p max:bee_flying_back",
+						"/ride @e[family=bee_flying_target] start_riding @p"
+					],
+					"transitions": [
+						{
+							"empty": "v.rot = math.mod(360 + math.mod(math.atan2(q.movement_direction(0), q.movement_direction(2)) + q.head_y_rotation(0), 360), 360); return 0;"
+						},
+						{
+							"no_movement": "q.movement_direction(0) == 0 && q.movement_direction(2) == 0"
+						},
+						{
+							"forward": "(variable.rot >= 293 && variable.rot <= 360) || (variable.rot >= 0 && variable.rot <= 67)"
+						},
+						{
+							"leftward": "variable.rot >= 23 && variable.rot <= 157"
+						},
+						{
+							"rightward": "variable.rot >= 203 && variable.rot <= 337"
+						}
+					]/*,
+					"on_exit": [
+						"/ride @p summon_rider max:bee_flying_target"
+					]*/
+				},
+
+				"leftward": {
+					"on_entry": [
+						"/say LEFTWARD",
+						"/event entity @p max:bee_flying_left",
+						"/ride @e[family=bee_flying_target] start_riding @p"
+						//"/event entity @e[family=bee_flying_target] max:despawn"
+					],
+					"transitions": [
+						{
+							"empty": "v.rot = math.mod(360 + math.mod(math.atan2(q.movement_direction(0), q.movement_direction(2)) + q.head_y_rotation(0), 360), 360); return 0;"
+						},
+						{
+							"no_movement": "q.movement_direction(0) == 0 && q.movement_direction(2) == 0"
+						},
+						{
+							"forward": "(variable.rot >= 293 && variable.rot <= 360) || (variable.rot >= 0 && variable.rot <= 67)"
+						},
+						{
+							"backward": "variable.rot >= 112 && variable.rot <= 248"
+						},
+						{
+							"rightward": "variable.rot >= 203 && variable.rot <= 337"
+						}
+					]/*,
+					"on_exit": [
+						"/ride @p summon_rider max:bee_flying_target"
+					]*/
+				},
+
+				"rightward": {
+					"on_entry": [
+						"/say RIGHTWARD",
+						"/event entity @p max:bee_flying_right",
+						"/ride @e[family=bee_flying_target] start_riding @p"
+						//"/event entity @e[family=bee_flying_target] max:despawn"
+					],
+					"transitions": [
+						{
+							"empty": "v.rot = math.mod(360 + math.mod(math.atan2(q.movement_direction(0), q.movement_direction(2)) + q.head_y_rotation(0), 360), 360); return 0;"
+						},
+						{
+							"no_movement": "q.movement_direction(0) == 0 && q.movement_direction(2) == 0"
+						},
+						{
+							"forward": "(variable.rot >= 293 && variable.rot <= 360) || (variable.rot >= 0 && variable.rot <= 67)"
+						},
+						{
+							"backward": "variable.rot >= 112 && variable.rot <= 248"
+						},
+						{
+							"leftward": "variable.rot >= 23 && variable.rot <= 157"
+						}
+					]/*,
+					"on_exit": [
+						"/ride @p summon_rider max:bee_flying_target"
+					]*/
+				}
+			}
+		}
+	}
+}

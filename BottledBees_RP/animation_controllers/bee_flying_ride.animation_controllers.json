@@ -1,0 +1,22 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.bee_flying_ride": {
+			"initial_state": "default",
+			"states": {
+				"default": {
+					"transitions": [
+						{
+							"face_forward": "query.has_rider"
+						}
+					]
+				},
+				"face_forward": {
+					"animations": [
+						"face_forward"
+					]
+				}
+			}
+		}
+	}
+}

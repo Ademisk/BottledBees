@@ -9,6 +9,160 @@
         },
 
         "component_groups": {
+            //====================================
+            // Addon
+            //====================================
+            "max:cgLeashable": {
+                "minecraft:leashable": {
+                    "soft_distance": 4.0,
+                    "hard_distance": 6.0,
+                    "max_distance": 15.0,
+                    "on_leash": {
+                        "event": "max:bee_leashed",
+                        "target": "self"
+                    },
+                    "on_unleash": {
+                        "event": "max:bee_unleashed",
+                        "target": "self"
+                    }
+                }
+            },
+
+            "max:cgShortLeashable": {
+                "minecraft:leashable": {
+                    "soft_distance": 0.0,
+                    "hard_distance": 0.0,
+                    "max_distance": 0.0
+                }
+            },
+
+            "max:take_nearest_player_target": {
+                "minecraft:behavior.nearest_attackable_target": {
+                    "priority": 2,
+                    "entity_types": [
+                        {
+                            "filters": {
+                                "all_of": [
+                                    {"test": "is_family", "subject": "other", "value": "player"},
+                                    {"test": "has_equipment", "domain": "head", "subject": "other", "operator": "not", "value": "max:flower_circlet"}
+                                ]
+                            },
+                            "max_dist": 10
+                        }
+                    ]
+                },
+                "minecraft:timer": {
+                    "looping": true,
+                    "time": 5,
+                    "time_down_event": {
+                        "event": "calmed_down",
+                        "target": "self"
+                    }
+                }
+            },
+
+            "max:take_nearest_any_target": {
+                "minecraft:behavior.nearest_attackable_target": {
+                    "priority": 2,
+                    "entity_types": [
+                        {
+                            "filters": {
+                                "all_of": [
+                                    {"test": "is_family", "operator": "!=", "subject": "other", "value": "bee"},
+                                    {"test": "has_equipment", "domain": "head", "subject": "other", "operator": "not", "value": "max:flower_circlet"}
+                                ]
+                            },
+                            "max_dist": 10
+                        }
+                    ]
+                },
+                "minecraft:timer": {
+                    "looping": true,
+                    "time": 5,
+                    "time_down_event": {
+                        "event": "calmed_down",
+                        "target": "self"
+                    }
+                },
+                "minecraft:type_family": {
+                    "family": [ "bee", "mob", "arthropod", "exited_bottle" ]
+                }
+            },
+
+            "max:take_nearest_flyer_target": {
+                "minecraft:behavior.nearest_attackable_target": {
+                    "priority": 1,
+                    "entity_types": [
+                        {
+                            "filters": {
+                                "all_of": [
+                                    {"test": "is_family", "subject": "other", "value": "bee_flying_target"}
+                                ]
+                            },
+                            "max_dist": 20
+                        }
+                    ]
+                },
+                "minecraft:type_family": {
+                    "family": [ "bee", "mob", "arthropod", "chasing_flyer_target" ]
+                },
+                "minecraft:flying_speed": {
+                    "value": 0.4
+                }
+            },
+
+            "max:default_move_speed": {
+                "minecraft:movement": {
+                    "value": 0.3
+                },
+                "minecraft:flying_speed": {
+                    "value": 0.15
+                }
+            },
+
+            "max:flyer_sensor": {
+                "minecraft:entity_sensor": {
+                    "sensor_range": 20,
+                    "relative_range":false,
+                    "minimum_count": 0,
+                    "maximum_count": 1,
+                    "event_filters": {
+                        "all_of": [
+                            {"test": "is_family", "subject": "other", "value": "bee_flying_target"}
+                        ]
+                    },
+                    "event": "max:target_flyer"
+                }
+            },
+
+            "max:angry_bee_from_leash_or_bottle": {
+                "minecraft:angry": {
+                    "duration": 25,
+                    "broadcastAnger": false,
+                    "calm_event": {
+                        "event": "calmed_down",
+                        "target": "self"
+                    }
+                },
+                "minecraft:behavior.melee_attack": {
+                    "priority": 2,
+                    "attack_once": true,
+                    "speed_multiplier": 1.4,
+                    "on_attack": {
+                        "event": "countdown_to_perish_event",
+                        "target": "self"
+                    }
+                }
+            },
+
+            "max:remove_self": {    //removes bee when captured by bottle
+                "minecraft:instant_despawn": { }
+            },
+
+            //====================================
+            //====================================
+
+
             "bee_baby": {
                 "minecraft:is_baby": {},
                 "minecraft:scale": {
@@ -149,54 +303,8 @@
                     ]
                 }
             },
-            "take_nearest_target": {
-                "minecraft:behavior.nearest_attackable_target": {
-                    "priority": 2,
-                    "entity_types": [
-                        {
-                            "filters": {
-                                "all_of": [
-                                    {"test": "is_family", "subject": "other", "value": "player"},
-                                    {"test": "has_equipment", "domain": "head", "subject": "other", "operator": "not", "value": "max:flower_circlet"}
-                                ]
-                            },
-                            "max_dist": 10
-                        }
-                    ]
-                },
-                "minecraft:timer": {
-                    "looping": true,
-                    "time": 5,
-                    "time_down_event": {
-                        "event": "calmed_down",
-                        "target": "self"
-                    }
-                }
-            },
-            "take_nearest_any_target": {
-                "minecraft:behavior.nearest_attackable_target": {
-                    "priority": 2,
-                    "entity_types": [
-                        {
-                            "filters": {
-                                "all_of": [
-                                    {"test": "is_family", "operator": "!=", "subject": "other", "value": "bee"},
-                                    {"test": "has_equipment", "domain": "head", "subject": "other", "operator": "not", "value": "max:flower_circlet"}
-                                ]
-                            },
-                            "max_dist": 10
-                        }
-                    ]
-                },
-                "minecraft:timer": {
-                    "looping": true,
-                    "time": 5,
-                    "time_down_event": {
-                        "event": "calmed_down",
-                        "target": "self"
-                    }
-                }
-            },
+
+
             "look_for_food": {
                 "minecraft:behavior.move_to_block": {
                     "priority": 10,
@@ -404,9 +512,6 @@
                     "range" : 0.0,
                     "value" : 0.0
                 }
-            },
-            "max:remove_self": {
-                "minecraft:instant_despawn": { }  //removes bee when captured by bottle
             }
         },
 
@@ -462,11 +567,6 @@
                 "interval": 1,
                 "hover_height": [1, 4]
             },
-            "minecraft:leashable": {
-                "soft_distance": 4.0,
-                "hard_distance": 6.0,
-                "max_distance": 10.0
-            },
             "minecraft:balloonable": {
                 "mass": 0.5
             },
@@ -477,7 +577,7 @@
                 "family": [ "bee", "mob", "arthropod" ]
             },
             "minecraft:on_target_acquired": {
-                "event": "attacked",
+                "event": "attack",
                 "target": "self"
             },
             "minecraft:breathable": {
@@ -569,6 +669,9 @@
         },
 
         "events": {
+            //================================================
+            // Addon
+            //================================================
             "max:capture_bee": {
                 "add": {
                     "component_groups": [ 
@@ -576,8 +679,99 @@
                     ]
                 }
             },
+
+            "max:exit_bottle": {
+                "add": {
+                    "component_groups": [
+                        "max:take_nearest_any_target"
+                    ]
+                },
+                "remove": {
+                    "component_groups": [
+                        "find_hive",
+                        "return_to_home",
+                        "has_nectar",
+                        "abort_shelter_detection",
+                        "shelter_detection",
+                        "escape_fire"
+                    ]
+                }
+            },
+
+            "max:target_flyer": {
+                "add": {
+                    "component_groups": [
+                        "max:take_nearest_flyer_target"
+                    ]
+                }
+            },
+
+            "max:bee_leashed": {
+                "add": {
+                    "component_groups": [
+                        "max:flyer_sensor"
+                    ]
+                }
+            },
+
+            "max:bee_unleashed": {
+                "remove": {
+                    "component_groups": [
+                        "max:flyer_sensor",
+                        "max:take_nearest_flyer_target"
+                    ]
+                },
+                "add": {
+                    "component_groups": [
+                        "max:default_move_speed"
+                    ]
+                }
+            },
+
+            "max:eRemove_bee_leash_ability": {
+                "sequence": [
+                    {
+                        "remove": {
+                            "component_groups": [
+                                "max:cgLeashable"
+                            ]
+                        }
+                    },
+                    {
+                        "add": {
+                            "component_groups": [
+                                "max:cgShortLeashable"
+                            ]
+                        }
+                    }
+                ]
+            },
+
+            "max:eAdd_bee_leash_ability": {
+                "remove": {
+                    "component_groups": [
+                        "max:cgShortLeashable"
+                    ]
+                },
+                "add": {
+                    "component_groups": [
+                        "max:cgLeashable"
+                    ]
+                }
+            },
+
+            //================================================
+            //================================================
+            
             "minecraft:entity_spawned": {
                 "sequence": [
+                    {
+                        "add": {
+                            "component_groups": [
+                                "max:cgLeashable"
+                            ]
+                        }
+                    },
                     {
                         "randomize": [
                             {
@@ -612,6 +806,7 @@
             "minecraft:entity_born": {
                 "add": {
                     "component_groups": [
+                        "max:cgLeashable",
                         "bee_baby",
                         "shelter_detection",
                         "track_attacker",
@@ -631,27 +826,10 @@
                     ]
                 }
             },
-            "max:exit_bottle": {
-                "add": {
-                    "component_groups": [
-                        "take_nearest_any_target"
-                    ]
-                },
-                "remove": {
-                    "component_groups": [
-                        "find_hive",
-                        "return_to_home",
-                        "has_nectar",
-                        "abort_shelter_detection",
-                        "shelter_detection",
-                        "escape_fire"
-                    ]
-                }
-            },
             "minecraft:exited_disturbed_hive": {
                 "add": {
                     "component_groups": [
-                        "take_nearest_target"
+                        "take_nearest_player_target"
                     ]
                 },
                 "remove": {
@@ -676,7 +854,7 @@
                         },
                         "add": {
                             "component_groups": [
-                                "take_nearest_target"
+                                "take_nearest_player_target"
                             ]
                         },
                         "remove": {
@@ -730,9 +908,10 @@
                     ]
                 }
             },
-            "attacked": {
+            "attack": {
                 "sequence": [
                     {
+                        //attacking handling if attacked (default)
                         "add": {
                             "component_groups": [
                                 "angry_bee"
@@ -740,7 +919,37 @@
                         },
                         "remove": {
                             "component_groups": [
-                                "take_nearest_target"
+                                "take_nearest_player_target"
+                            ]
+                        }
+                    },
+                    {
+                        //attacking handling if exit_bottle
+                        "filters":{"test": "is_family", "subject": "self", "value": "exited_bottle"},
+                        "add": {
+                            "component_groups": [
+                                "max:angry_bee_from_leash_or_bottle"
+                            ]
+                        },
+                        "remove": {
+                            "component_groups": [
+                                "angry_bee",
+                                "max:take_nearest_any_target"
+                            ]
+                        }
+                    },
+                    {
+                        //attacking handling if target_flyer
+                        "filters":{"test": "is_family", "subject": "self", "value": "chasing_flyer_target"},
+                        "add": {
+                            "component_groups": [
+                                "max:angry_bee_from_leash_or_bottle"
+                            ]
+                        },
+                        "remove": {
+                            "component_groups": [
+                                "angry_bee",
+                                "max:take_nearest_flyer_target"
                             ]
                         }
                     },
@@ -783,7 +992,9 @@
                 "remove": {
                     "component_groups": [
                         "angry_bee",
-                        "take_nearest_target"
+                        "max:angry_bee_from_leash_or_bottle",
+                        "take_nearest_player_target",
+                        "max:take_nearest_any_target"
                     ]
                 }
             },
@@ -901,7 +1112,7 @@
                     "component_groups": [
                         "collect_nectar",
                         "track_attacker",
-                        "take_nearest_target",
+                        "take_nearest_player_target",
                         "look_for_food",
                         "angry_bee",
                         "hive_full",

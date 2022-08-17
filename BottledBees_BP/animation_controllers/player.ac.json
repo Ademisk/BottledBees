@@ -1,0 +1,141 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.player.load": {
+			"initial_state": "default",
+			"states": {
+				"default": {
+					"on_entry": [
+						"/say Default"
+					],
+					"transitions": [
+						{
+							"start_beeing_flight_capable": "query.variant == 1"
+						}
+					]
+				},
+
+				"start_beeing_flight_capable": {		//can now fly, still on ground
+					"on_entry": [
+						"/say Can fly!",
+						"/ride @s summon_rider max:bee_flying_target"
+					],
+					"transitions": [
+						{
+							"stop_beeing_flight_capable": "query.variant == 0"		//stop all flight if variant is not 1 (which implies the required # of leashed bees no longer there)
+						},
+						{
+							"unleash_bees": "query.is_sneaking && variable.attack_time > 0.0"
+						},
+						{
+							"bee_flight_mount": "query.is_jumping"
+						}
+					]
+				},
+
+				"unleash_bees": {
+					"on_entry": [
+						"/say unleash bees!!!!",
+						"/event entity @e[family=bee] max:eRemove_bee_leash_ability",
+						"/event entity @e[family=bee] max:bee_unleashed",
+						"/event entity @e[family=bee] max:exit_bottle"				//target anything in anger
+					],
+					"transitions": [
+						{
+							"stop_beeing_flight_capable": "1"
+						}
+					],
+					"on_exit": [
+						"/event entity @e[family=bee] max:eAdd_bee_leash_ability"
+					]
+				},
+
+				"bee_flight_mount" : {			//is flying, transition into rising
+					"on_entry": [
+						"/summon max:bee_flying_ride",
+						"/tp @e[family=bee_flying_ride] ~ ~ ~ facing ^ ^ ^1",
+						"/ride @s start_riding @e[family=bee_flying_ride]"
+					],
+					"transitions": [
+						{
+							"bee_flight_rise": "1"
+						}
+					]
+				},
+
+				"bee_flight_rise": {			//is flying, is rising
+					"on_entry": [
+						"/say Rise",
+						"/effect @e[family=bee_flying_ride,r=1,c=1] clear",
+						"/effect @e[family=bee_flying_ride,r=1,c=1] levitation 100000 6 true"
+					],
+					"transitions": [
+						{
+							"stop_beeing_flight_capable": "query.variant == 0"
+						},
+						{
+							"unleash_bees": "!query.is_riding"
+						},
+						{
+							"bee_flight_slow_fall": "!query.is_jumping"
+						}
+					]
+				},
+
+				"bee_flight_slow_fall": {		//is flying, is falling
+					"on_entry": [
+						"/say Fall",
+						"/effect @e[family=bee_flying_ride,r=1,c=1] clear",
+						"/effect @e[family=bee_flying_ride,r=1,c=1] slow_falling 100000 1 true"
+					],
+					"transitions": [
+						{
+							"stop_beeing_flight_capable": "query.variant == 0"
+						},
+						{
+							"bee_flight_rise": "query.is_jumping"
+						},
+						{
+							"bee_flight_dismount": "!query.is_riding"	//bee_flying_ride handles 'query.is_on_ground' check, and despawns
+						}
+					]
+				},
+
+				//Landing and getting off the bee_flying_ride. If enough bees leashed, go back to being 'bee flight capable'
+				"bee_flight_dismount": {
+					"on_entry": [
+						"/say Dismounted",
+						"/event entity @s max:bee_flying_stationary",
+						"/ride @e[family=bee_flying_target] start_riding @s"
+					],
+					"transitions": [
+						{
+							"stop_beeing_flight_capable": "query.variant == 0"
+						},
+						{
+							"unleash_bees": "!query.is_on_ground"		//if dismounted but not on ground, that means player dismounted while flying
+						},
+						{
+							"start_beeing_flight_capable": "1"
+						}
+					]
+				},
+
+				//Player cannot bee fly, though Player may still have some bees leashed
+				"stop_beeing_flight_capable": {
+					"on_entry": [
+						"/say Can't Fly",
+						//"@s max:remove_all_bee_flying_sensors",
+						"@s max:become_bee_flight_incapable",
+						"/event entity @e[family=bee_flying_target] max:despawn"
+					],
+					"transitions": [
+						{
+							"default": "1"
+						}
+					]
+				}
+			}
+		}
+	}
+}

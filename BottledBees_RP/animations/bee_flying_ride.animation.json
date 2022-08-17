@@ -1,0 +1,13 @@
+{
+	"format_version" : "1.8.0",
+	"animations" : {
+		"animation.bee_flying_ride.face_forward" : {
+			"loop" : true,
+			"bones": {
+				"body": {
+				  	"rotation": [ 0.0, "query.camera_rotation(1)", 0.0 ]
+				}
+			}
+		}
+	}
+}
