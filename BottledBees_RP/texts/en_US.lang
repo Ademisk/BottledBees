@@ -5,9 +5,14 @@ item.max:bee_in_a_bottle=Bottled Bee
 
 item.max:flower_string.name=Flower String
 item.max:flower_string=Flower String
-
 item.max:rarer_flower_string.name=Rarer Flower String
 item.max:rarer_flower_string=Rarer Flower String
-
 item.max:flower_circlet.name=Flower Circlet
 item.max:flower_circlet=Flower Circlet
+
+entity.max:bee_flying_ride.name=Bee Flying Ride
+entity.max:bee_flying_ride=Bee Flying Ride
+action.hint.exit.max:bee_flying_ride= 
+
+entity.max:bee_flying_target.name=Bee Flying Target
+entity.max:bee_flying_target=Bee Flying Target

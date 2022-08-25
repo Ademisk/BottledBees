@@ -1,0 +1,40 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.bee.load": {
+      "initial_state": "default",
+      "states": {
+        "default": {
+          "transitions": [
+            {
+              "leashed": "query.is_leashed"
+            }
+          ]
+        },
+
+        "leashed": {
+          "on_entry": [
+            "/say leashed!"
+          ],
+          "transitions": [
+            {
+              "unleashed": "!query.is_leashed"
+            }
+          ]
+        },
+
+        "unleashed": {
+          "on_entry": [
+            "/say unleashed!",
+            "/event entity @p[family=player] max:bee_unleashed"
+          ],
+          "transitions": [
+            {
+              "leashed": "query.is_leashed"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
